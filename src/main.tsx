@@ -7,12 +7,12 @@ import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Auth0ProviderWithHistory>
-      <ApolloProviderWithConfig>
-        <BrowserRouter>
+    <BrowserRouter>
+      <Auth0ProviderWithHistory>
+        <ApolloProviderWithConfig>
           <App />
-        </BrowserRouter>
-      </ApolloProviderWithConfig>
-    </Auth0ProviderWithHistory>
+        </ApolloProviderWithConfig>
+      </Auth0ProviderWithHistory>
+    </BrowserRouter>
   </StrictMode>,
 )
