@@ -1,20 +1,28 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Search } from "@mui/icons-material";
-import { InputBase } from "@mui/material";
+import { InputBase, InputBaseProps } from "@mui/material";
 interface SearchBar{
   onSearch: (query: string) => void;
   placeholder?: string;
 }
 
-const SearchBar: FC<SearchBar> = () => {
+const SearchBar: FC<SearchBar> = ({onSearch, placeholder}) => {
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  const onChange: InputBaseProps['onChange'] = (event) => {
+    const newValue = event.target.value;
+    setSearchValue(newValue);
+    onSearch(newValue);
+  }
+
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <Search />
       <InputBase
-        placeholder="Buscar…"
+        placeholder={placeholder}
         inputProps={{ "aria-label": "search" }}
-        value
-        onChange
+        value={searchValue}
+        onChange={onChange}
         sx={{
           paddingLeft: 2,
           width: "12ch",
