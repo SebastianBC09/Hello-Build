@@ -13,19 +13,20 @@ const Auth0ProviderWithHistory:FC<Auth0ProviderWithHistory> = ({children}) => {
   const navigate = useNavigate();
 
   const onRedirectCallback = (appState: any) => {
-    navigate(appState?.returnTo || window.location.pathname);
+    navigate(appState?.returnTo || '/');;
   };
   return (
     <Auth0Provider
       domain={domain}
       clientId={clientId}
       authorizationParams={{
-        redirect_uri: window.location.origin,
+        redirect_uri: import.meta.env.VITE_AUTH0_CALLBACK_URL,
         audience: audience,
-        scope: 'openid profile email read:user read:repo'
+        scope: "read:current_user update:current_user_metadata"
       }}
       onRedirectCallback={onRedirectCallback}
-      cacheLocation='localstorage'
+      cacheLocation="localstorage"
+      useRefreshTokens={true}
     >
       {children}
     </Auth0Provider>
