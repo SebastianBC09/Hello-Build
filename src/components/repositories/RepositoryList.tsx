@@ -2,13 +2,8 @@ import { FC, useEffect } from 'react';
 import { Alert, AlertTitle, Box, CircularProgress, Typography } from '@mui/material';
 import RepoCard from './RepoCard';
 import { useRepositories } from '../../hooks/useRepositories';
-import { Repository } from '../../apollo/types/github.types';
-interface RepositoryList {
-  repositories: Repository[];
-  onFavoriteToggle: (repoId: number) => void;
-}
 
-const RepositoryList: FC<ReportList> = () => {
+const RepositoryList: FC = () => {
   const { repositories, fetchRepositories, isLoading, error } = useRepositories();
 
   useEffect(() => {
