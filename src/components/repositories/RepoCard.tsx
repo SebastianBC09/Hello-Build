@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Box, Card, CardContent, Chip, Link, Typography } from '@mui/material';
 import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
+import { Star } from '@mui/icons-material';
 import FavoriteButton from './FavoriteButton';
 
 interface RepoCard {
@@ -18,40 +19,58 @@ interface RepoCard {
 }
 const RepoCard: FC<RepoCard> = ({ id, name, description, language, url, stargazerCount, isPrivate }) => {
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card
+      elevation={2}
+      sx={{
+        minWidth: 275,
+        transition: 'transform 0.2s',
+        '&:hover': {
+          transform: 'translateY(-2px)'
+        }
+      }}
+    >
       <CardContent>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-          <Link href={url} target="_blank" underline="hover">
-            <Typography variant="h5" component="div">
-              {name}
-            </Typography>
-          </Link>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+          <Box>
+            <Link
+              href={url}
+              target="_blank"
+              underline="hover"
+              sx={{ color: 'primary.main' }}
+            >
+              <Typography variant="h6">{name}</Typography>
+            </Link>
+            {description && (
+              <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                {description}
+              </Typography>
+            )}
+          </Box>
           <FavoriteButton repoId={id} />
         </Box>
 
-        {description && (
-          <Typography sx={{ mb: 2 }} color="text.secondary">
-            {description}
-          </Typography>
-        )}
-
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 2 }}>
           {language && (
             <Chip
+              size="small"
               label={language.name}
               sx={{
                 backgroundColor: language.color,
-                color: '#fff'
+                color: '#fff',
+                '& .MuiChip-label': { fontWeight: 500 }
               }}
             />
           )}
           <Chip
-            icon={isPrivate ? <LockTwoToneIcon /> : <LockOpenTwoToneIcon />}
+            size="small"
+            icon={isPrivate ? <LockTwoToneIcon fontSize="small" /> : <LockOpenTwoToneIcon fontSize="small" />}
             label={isPrivate ? 'Private' : 'Public'}
             variant="outlined"
           />
           <Chip
-            label={`${stargazerCount} stars`}
+            size="small"
+            icon={<Star fontSize="small" />}
+            label={stargazerCount}
             variant="outlined"
           />
         </Box>
