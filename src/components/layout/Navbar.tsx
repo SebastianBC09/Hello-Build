@@ -1,9 +1,9 @@
-import React from 'react';
+import { FC } from 'react';
 import { AppBar, Toolbar, Typography } from '@mui/material';
 import SearchBar from './SearchBar';
 import ProfileLink from './ProfileLink';
 
-const Navbar: React.FC = () => {
+const Navbar: FC = () => {
   return (
     <AppBar position="static">
       <Toolbar>
