@@ -4,6 +4,8 @@ import { Star, StarBorder } from '@mui/icons-material';
 
 interface FavoriteButton {
   repoId: number;
+  isFavorite: boolean;
+  onToggleFavorite: (repoId: number) => void;
 }
 
 const FavoriteButton: FC<FavoriteButton> = ({ repoId }) => {

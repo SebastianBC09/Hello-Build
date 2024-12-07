@@ -1,15 +1,14 @@
 export interface Repository {
-  id: string;
+  id: number;
   name: string;
   description: string | null;
-  url: string;
-  stargazerCount: number;
-  primaryLanguage: {
+  language: {
     name: string;
     color: string;
   } | null;
+  url: string;
+  stargazerCount: number;
   isPrivate: boolean;
-  updatedAt: string;
 }
 
 export interface RepositoryResponse {
@@ -20,7 +19,6 @@ export interface RepositoryResponse {
         hasNextPage: boolean;
         endCursor: string;
       };
-      totalCount: number;
     };
   };
 }

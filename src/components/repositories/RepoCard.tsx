@@ -3,10 +3,16 @@ import { Card, CardContent, Chip, Typography } from '@mui/material';
 import FavoriteButton from './FavoriteButton';
 
 interface RepoCard {
-  name: string;
-  description: string;
-  language: string;
   id: number;
+  name: string;
+  description: string | null;
+  language: {
+    name: string;
+    color: string;
+  } | null;
+  url: string;
+  stargazerCount: number;
+  isPrivate: boolean;
 }
 const RepoCard: FC<RepoCard> = ({ name, description, language, id}) => {
   return (

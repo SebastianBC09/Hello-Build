@@ -1,8 +1,12 @@
 import { FC } from "react";
 import { Search } from "@mui/icons-material";
 import { InputBase } from "@mui/material";
+interface SearchBar{
+  onSearch: (query: string) => void;
+  placeholder?: string;
+}
 
-const SearchBar: FC = () => {
+const SearchBar: FC<SearchBar> = () => {
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       <Search />
