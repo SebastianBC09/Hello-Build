@@ -1,8 +1,9 @@
-export interface Auth0User {
+export interface AuthUser {
   sub: string;
-  nickname: string;
   name: string;
-  picture: string;
-  updated_at: string;
+  nickname: string;
   email?: string;
+  picture?: string;
+  email_verified?: boolean;
+  updated_at: string;
 }
