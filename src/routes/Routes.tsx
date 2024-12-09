@@ -3,6 +3,7 @@ import { useAuth } from '../auth/hooks/useAuth';
 import LoginPage from '../pages/LoginPage';
 import HomePage from '../pages/HomePage';
 import ProfilePage from '../pages/ProfilePage';
+import CallbackPage from '../pages/CallbackPage';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -23,6 +24,7 @@ export const AppRoutes = () => {
     <Routes>
       {/* Public Routes */}
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/callback" element={<CallbackPage />} />
 
       {/* Protected Routes */}
       <Route path="/" element={

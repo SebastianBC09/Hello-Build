@@ -1,26 +1,43 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 import { repositoryService } from '../services/repositoryService';
 import { Repository } from '../types/repository.types';
+import { AxiosError } from 'axios';
 
 export const useRepositories = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchRepositories = async () => {
-      try {
-        const { data } = await repositoryService.getRepositories();
-        setRepositories(data);
-      } catch (err) {
-        setError('Failed to fetch repositories');
-      } finally {
-        setLoading(false);
+  const fetchRepositories = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const { data } = await repositoryService.getRepositories();
+      setRepositories(data);
+    } catch (err) {
+      const axiosError = err as AxiosError;
+      if (axiosError.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error('Error response:', {
+          data: axiosError.response.data,
+          status: axiosError.response.status,
+          headers: axiosError.response.headers,
+        });
+        setError(`Server error: ${JSON.stringify(axiosError.response.data)}`);
+      } else if (axiosError.request) {
+        // The request was made but no response was received
+        console.error('No response received:', axiosError.request);
+        setError('No response received from server');
+      } else {
+        // Something happened in setting up the request
+        console.error('Error setting up request:', axiosError.message);
+        setError(axiosError.message);
       }
-    };
-
-    fetchRepositories();
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
-  return { repositories, loading, error };
+  return { repositories, isLoading, error, fetchRepositories };
 };

@@ -1,4 +1,3 @@
-// src/auth/hooks/useAuth.tsx
 import { useAuth0 } from '@auth0/auth0-react';
 import { useEffect } from 'react';
 import { useStore } from '../../store/useStore';
@@ -8,28 +7,45 @@ export const useAuth = () => {
     getAccessTokenSilently,
     user,
     isAuthenticated,
-    logout,
-    isLoading
+    logout: auth0Logout,
+    isLoading,
+    loginWithRedirect
   } = useAuth0();
 
   const setToken = useStore((state) => state.setToken);
   const clearAuth = useStore((state) => state.clearAuth);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      getAccessTokenSilently().then(setToken);
-    }
-  }, [isAuthenticated, getAccessTokenSilently, setToken]);
+    const getToken = async () => {
+      try {
+        if (isAuthenticated) {
+          const token = await getAccessTokenSilently();
+          console.log('Token obtained successfully'); // Debug log
+          setToken(token);
+        }
+      } catch (error) {
+        console.error('Error getting token:', error);
+        clearAuth();
+      }
+    };
+
+    getToken();
+  }, [isAuthenticated, getAccessTokenSilently, setToken, clearAuth]);
 
   const handleLogout = () => {
     clearAuth();
-    logout();
+    auth0Logout();
+  };
+
+  const handleLogin = () => {
+    loginWithRedirect();
   };
 
   return {
     user,
     isAuthenticated,
     isLoading,
-    logout: handleLogout
+    logout: handleLogout,
+    login: handleLogin
   };
 };
