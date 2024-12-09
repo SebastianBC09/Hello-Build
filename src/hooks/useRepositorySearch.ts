@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { ServiceError } from '../types/error.types';
-import { Repository } from '../apollo/types/github.types';
 import { repositoryService } from '../services/repositoryService';
+import { Repository } from '../types/repository.types';
 
 export const useRepositorySearch = () => {
   const [searchResults, setSearchResults] = useState<Repository[]>([]);
@@ -11,13 +11,13 @@ export const useRepositorySearch = () => {
   const searchRepositories = useCallback(async(query: string) => {
     if(!query.trim()) {
       setSearchResults([]);
-      return []
+      return;
     }
 
     try {
       setIsSearching(true);
-      const results = await repositoryService.searchRepositories(query);
-      setSearchResults(results);
+      const { data } = await repositoryService.searchRepositories(query);
+      setSearchResults(data);
     } catch (error) {
       setSearchError(error as ServiceError);
     } finally {
@@ -25,5 +25,5 @@ export const useRepositorySearch = () => {
     }
   },[]);
 
-  return { searchResults, isSearching, searchError, searchRepositories}
-}
+  return { searchResults, isSearching, searchError, searchRepositories };
+};
