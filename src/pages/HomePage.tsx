@@ -5,9 +5,20 @@ import RepositoryList from '../components/repositories/RepositoryList';
 
 const HomePage: FC = () => {
   return (
-    <Box>
+  <Box
+      sx={{
+        minHeight: '100vh',
+        background: '#f5f8fc',
+      }}
+    >
       <Navbar />
-      <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Container
+        maxWidth="lg"
+        sx={{
+          py: 6,
+          px: { xs: 2, sm: 3, md: 4 }
+        }}
+      >
         <RepositoryList />
       </Container>
     </Box>

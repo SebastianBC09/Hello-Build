@@ -47,15 +47,53 @@ const RepoCard: FC<RepoCard> = ({id,
 
 
 return (
-    <Card elevation={2} sx={{ minWidth: 275 }}>
-      <CardContent>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
+    <Card
+      elevation={0} // Remove default elevation
+      sx={{
+        minWidth: 275,
+        background: '#fff',
+        borderRadius: 2,
+        transition: 'all 0.2s ease-in-out',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)', // Subtle default shadow
+        '&:hover': {
+          transform: 'translateY(-4px)',
+          boxShadow: '0 12px 20px rgba(0, 0, 0, 0.1)', // Enhanced shadow on hover
+        }
+      }}
+    >
+      <CardContent sx={{ p: 3 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
           <Box>
-            <Link href={url} target="_blank" underline="hover" sx={{ color: 'primary.main' }}>
-              <Typography variant="h6">{name}</Typography>
+            <Link
+              href={url}
+              target="_blank"
+              underline="hover"
+              sx={{
+                color: '#1e3c72',
+                textDecoration: 'none',
+                '&:hover': {
+                  color: '#2a5298'
+                }
+              }}
+            >
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 500,
+                  mb: 1
+                }}
+              >
+                {name}
+              </Typography>
             </Link>
             {description && (
-              <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+              <Typography
+                variant="body2"
+                sx={{
+                  color: 'text.secondary',
+                  lineHeight: 1.6
+                }}
+              >
                 {description}
               </Typography>
             )}
@@ -66,29 +104,32 @@ return (
           />
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 2 }}>
-          {primaryLanguage && (  // Changed from language
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 3 }}>
+          {primaryLanguage && (
             <Chip
               size="small"
               label={primaryLanguage.name}
               sx={{
                 backgroundColor: primaryLanguage.color,
                 color: '#fff',
-                '& .MuiChip-label': { fontWeight: 500 }
+                fontWeight: 500,
+                px: 1
               }}
             />
           )}
           <Chip
             size="small"
-            icon={isPrivate ? <LockTwoToneIcon fontSize="small" /> : <LockOpenTwoToneIcon fontSize="small" />}
+            icon={isPrivate ? <LockTwoToneIcon /> : <LockOpenTwoToneIcon />}
             label={isPrivate ? 'Private' : 'Public'}
             variant="outlined"
+            sx={{ borderColor: '#1e3c72', color: '#1e3c72' }}
           />
           <Chip
             size="small"
-            icon={<Star fontSize="small" />}
+            icon={<Star sx={{ color: '#1e3c72' }} />}
             label={stargazerCount}
             variant="outlined"
+            sx={{ borderColor: '#1e3c72', color: '#1e3c72' }}
           />
         </Box>
       </CardContent>
