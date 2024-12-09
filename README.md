@@ -1,33 +1,30 @@
-# GitHub Favorites Frontend
+# GitHub Favorites Frontend Test 🚀
 
-A React application that allows users to manage their GitHub repositories and favorites.
+Modern React application to manage your GitHub repositories with Auth0 authentication.
 
-## Features
-
+## ✨ Features
 - 🔐 Auth0 Authentication with GitHub
 - 📚 List your GitHub repositories
 - 🔍 Search through repositories
 - ⭐ Save favorite repositories
 - 🎨 Material-UI components
 - 📱 Responsive design
+- 💾 Persistent storage with Zustand
 
-## Tech Stack
-
-- React 18 with TypeScript
-- Vite for build tooling
-- Material-UI (MUI) for UI components
+## 🛠️ Tech Stack
+- React + TypeScript
+- Material-UI v5
+- Auth0 React SDK
 - Zustand for state management
-- React Router for navigation
-- Auth0 for authentication
+- React Router v6
+- Axios for API calls
 
-## Prerequisites
+## 🚀 Getting Started
+### Prerequisites
 
-Before running this project, make sure you have:
-
-- Node.js v18 or higher
-- npm or yarn package manager
-- Auth0 account with GitHub provider configured
-- GitHub OAuth App credentials
+- Node.js >= 20
+- GitHub account
+- Auth0 account
 
 ## Environment Variables
 
@@ -66,20 +63,67 @@ src/
 ├── components/     # Reusable UI components
 ├── hooks/          # Custom React hooks
 ├── pages/          # Page components
+├── routes/         # Routes components
 ├── services/       # API services
 ├── store/          # Zustand store and slices
 ├── types/          # TypeScript interfaces
+├── main.tsx        # Application entry point
 └── main.tsx        # Application entry point
 ```
 
-## Contributing
+## 🔒 Authentication Flow
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'feat: add some feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. User clicks "Login with GitHub"
+2. Auth0 redirects to GitHub OAuth
+3. After authorization, redirects to callback URL
+4. Access token stored in Zustand store
+5. Token used for API requests
+
+## 🎯 Core Features
+### Repository Management
+- List all user repositories
+- Search functionality
+- Favorite/unfavorite repositories
+
+### Profile Section
+- User information display
+- Favorite repositories list
+
+## 🧩 Key Components
+
+### `<RepoCard />`
+Display repository information with:
+- Repository name and description
+- Star count and privacy status
+- Primary language
+- Favorite toggle
+
+### `<RepositoryList />`
+- Handles repository fetching and display
+- Loading states
+- Error handling
+- Empty states
+
+### `<SearchBar />`
+- Real-time search functionality
+- Debounced search updates
+- Integration with Zustand store
+
+## 🔄 State Management
+
+Zustand slices:
+- `authSlice`: Authentication state
+- `userSlice`: User information
+- `favoritesSlice`: Favorite repositories
+- `searchSlice`: Search functionality
+
+
+## 🌐 API Integration
+
+Endpoints used:
+- `/api/github/repositories`
+- `/api/github/repositories/search`
+- `/api/favorites`
 
 ## License
-
 This project is licensed under the MIT License.
