@@ -4,6 +4,7 @@ import LockTwoToneIcon from '@mui/icons-material/LockTwoTone';
 import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 import { Star } from '@mui/icons-material';
 import FavoriteButton from './FavoriteButton';
+import { useFavorites } from '../../hooks/useFavorites';
 
 interface RepoCard {
   id: number;
@@ -18,6 +19,18 @@ interface RepoCard {
   isPrivate: boolean;
 }
 const RepoCard: FC<RepoCard> = ({ id, name, description, language, url, stargazerCount, isPrivate }) => {
+  const { favorites, addFavorite, removeFavorite } = useFavorites();
+  const isFavorite = favorites.some(repo => repo.id === id);
+
+  const handleFavoriteClick = () => {
+    if (isFavorite) {
+      removeFavorite(id.toString());
+    } else {
+      addFavorite({ id, name, description, language, url, stargazerCount, isPrivate });
+    }
+  };
+
+
   return (
     <Card
       elevation={2}
@@ -46,7 +59,10 @@ const RepoCard: FC<RepoCard> = ({ id, name, description, language, url, stargaze
               </Typography>
             )}
           </Box>
-          <FavoriteButton repoId={id} />
+          <FavoriteButton
+            isFavorite={isFavorite}
+            onToggle={handleFavoriteClick}
+          />
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 2 }}>
