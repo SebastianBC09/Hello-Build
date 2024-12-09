@@ -1,10 +1,17 @@
-import { useEffect } from 'react';
+// src/auth/hooks/useAuth.tsx
 import { useAuth0 } from '@auth0/auth0-react';
-
+import { useEffect } from 'react';
 import { useStore } from '../../store/useStore';
 
 export const useAuth = () => {
-  const { getAccessTokenSilently, user, isAuthenticated, logout } = useAuth0();
+  const {
+    getAccessTokenSilently,
+    user,
+    isAuthenticated,
+    logout,
+    isLoading
+  } = useAuth0();
+
   const setToken = useStore((state) => state.setToken);
   const clearAuth = useStore((state) => state.clearAuth);
 
@@ -22,6 +29,7 @@ export const useAuth = () => {
   return {
     user,
     isAuthenticated,
+    isLoading,
     logout: handleLogout
   };
 };
