@@ -48,16 +48,16 @@ const RepoCard: FC<RepoCard> = ({id,
 
 return (
     <Card
-      elevation={0} // Remove default elevation
+      elevation={0}
       sx={{
         minWidth: 275,
         background: '#fff',
         borderRadius: 2,
         transition: 'all 0.2s ease-in-out',
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)', // Subtle default shadow
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
         '&:hover': {
           transform: 'translateY(-4px)',
-          boxShadow: '0 12px 20px rgba(0, 0, 0, 0.1)', // Enhanced shadow on hover
+          boxShadow: '0 12px 20px rgba(0, 0, 0, 0.1)',
         }
       }}
     >

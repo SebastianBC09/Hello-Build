@@ -24,11 +24,13 @@ export const repositoryService = {
 
   searchRepositories: async (query: string) => {
     try {
-      const response = await api.get(`/api/github/repositories/search?query=${query}`);
-      return response.data;
+      const response = await api.get(`/api/github/repositories/search?query=${encodeURIComponent(query)}`);
+      return {
+        data: Array.isArray(response.data) ? response.data : response.data.items || []
+      };
     } catch (error) {
       console.error('Search repositories error:', error);
-      throw error;
+      return { data: [] };
     }
   },
 
