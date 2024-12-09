@@ -1,50 +1,85 @@
-# React + TypeScript + Vite
+# GitHub Favorites Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React application that allows users to manage their GitHub repositories and favorites.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔐 Auth0 Authentication with GitHub
+- 📚 List your GitHub repositories
+- 🔍 Search through repositories
+- ⭐ Save favorite repositories
+- 🎨 Material-UI components
+- 📱 Responsive design
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- React 18 with TypeScript
+- Vite for build tooling
+- Material-UI (MUI) for UI components
+- Zustand for state management
+- React Router for navigation
+- Auth0 for authentication
 
-- Configure the top-level `parserOptions` property like this:
+## Prerequisites
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Before running this project, make sure you have:
+
+- Node.js v18 or higher
+- npm or yarn package manager
+- Auth0 account with GitHub provider configured
+- GitHub OAuth App credentials
+
+## Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
+
+```bash
+VITE_AUTH0_DOMAIN=your-auth0-domain
+VITE_AUTH0_CLIENT_ID=your-auth0-client-id
+VITE_AUTH0_AUDIENCE=your-auth0-audience
+VITE_AUTH0_CALLBACK_URL=http://localhost:5173/callback
+VITE_API_URL=http://localhost:8080
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## Installation
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+1. Clone the repository
+2. Install dependencies
+```bash
+npm install
+# or
+yarn
 ```
+
+3. Start the development server
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+## Project Structure
+
+```
+src/
+├── auth/           # Auth0 related code
+├── components/     # Reusable UI components
+├── hooks/          # Custom React hooks
+├── pages/          # Page components
+├── services/       # API services
+├── store/          # Zustand store and slices
+├── types/          # TypeScript interfaces
+└── main.tsx        # Application entry point
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add some feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License.
