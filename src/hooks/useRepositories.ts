@@ -1,12 +1,13 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { repositoryService } from '../services/repositoryService';
 import { Repository } from '../types/repository.types';
-import { AxiosError } from 'axios';
+import { useStore } from '../store/useStore';
 
 export const useRepositories = () => {
   const [repositories, setRepositories] = useState<Repository[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+  const searchQuery = useStore(state => state.searchQuery);
 
   const fetchRepositories = useCallback(async () => {
     try {
@@ -15,29 +16,46 @@ export const useRepositories = () => {
       const { data } = await repositoryService.getRepositories();
       setRepositories(data);
     } catch (err) {
-      const axiosError = err as AxiosError;
-      if (axiosError.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.error('Error response:', {
-          data: axiosError.response.data,
-          status: axiosError.response.status,
-          headers: axiosError.response.headers,
-        });
-        setError(`Server error: ${JSON.stringify(axiosError.response.data)}`);
-      } else if (axiosError.request) {
-        // The request was made but no response was received
-        console.error('No response received:', axiosError.request);
-        setError('No response received from server');
-      } else {
-        // Something happened in setting up the request
-        console.error('Error setting up request:', axiosError.message);
-        setError(axiosError.message);
-      }
+      setError(err instanceof Error ? err : new Error('Failed to fetch repositories'));
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  return { repositories, isLoading, error, fetchRepositories };
+  const searchRepositories = useCallback(async (query: string) => {
+    if (!query.trim()) {
+      return fetchRepositories();
+    }
+
+    try {
+      setIsLoading(true);
+      setError(null);
+      const { data } = await repositoryService.searchRepositories(query);
+      setRepositories(data);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error('Failed to search repositories'));
+    } finally {
+      setIsLoading(false);
+    }
+  }, [fetchRepositories]);
+
+  useEffect(() => {
+    const debounceSearch = setTimeout(() => {
+      if (searchQuery) {
+        searchRepositories(searchQuery);
+      } else {
+        fetchRepositories();
+      }
+    }, 300);
+
+    return () => clearTimeout(debounceSearch);
+  }, [searchQuery, searchRepositories, fetchRepositories]);
+
+  return {
+    repositories,
+    isLoading,
+    error,
+    fetchRepositories,
+    searchRepositories
+  };
 };
