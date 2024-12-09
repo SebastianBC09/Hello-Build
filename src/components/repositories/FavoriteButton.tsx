@@ -1,23 +1,14 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { IconButton } from '@mui/material';
 import { Star, StarBorder } from '@mui/icons-material';
-import { useFavorites } from '../../hooks/useFavorites';
-
 interface FavoriteButton {
-  repoId: number;
+  isFavorite: boolean;
+  onToggle: () => void;
 }
 
-const FavoriteButton: FC<FavoriteButton> = ({ repoId }) => {
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
-  const { toggleFavorites, favorites } = useFavorites();
-
-  useEffect(() => {
-    const isRepoFavorite = favorites.some((repository) => repository.id === repoId);
-    setIsFavorite(isRepoFavorite);
-  }, [favorites, repoId])
-
+const FavoriteButton: FC<FavoriteButton> = ({ isFavorite, onToggle  }) => {
   return (
-    <IconButton onClick={() => toggleFavorites(repoId)} aria-label="add to favorites">
+    <IconButton onClick={onToggle} aria-label="add to favorites">
       {isFavorite ? <Star color="warning" /> : <StarBorder />}
     </IconButton>
   );
