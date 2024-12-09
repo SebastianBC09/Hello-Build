@@ -11,7 +11,7 @@ export const useFavorites = () => {
     try {
       setLoading(true);
       const data = await repositoryService.getFavorites();
-      setFavorites(data.favorites || []); // Add fallback empty array
+      setFavorites(data.favorites || []);
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to fetch favorites'));
     } finally {
