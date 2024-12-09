@@ -4,9 +4,9 @@ import RepoCard from '../repositories/RepoCard';
 import { useFavorites } from '../../hooks/useFavorites';
 
 const FavoriteRepos: FC = () => {
-  const { favorites, loading: isLoading, error } = useFavorites();
+  const { favorites, loading, error } = useFavorites();
 
-  if (isLoading) {
+  if (loading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
         <CircularProgress />
@@ -18,7 +18,7 @@ const FavoriteRepos: FC = () => {
     return (
       <Alert severity="error" sx={{ mb: 2 }}>
         <AlertTitle>Error</AlertTitle>
-        {error}
+        {error.message}
       </Alert>
     );
   }

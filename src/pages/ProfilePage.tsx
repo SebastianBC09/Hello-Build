@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Box, Container, Typography, Paper, Avatar, Divider } from '@mui/material';
 import { useAuth } from '../auth/hooks/useAuth';
 import Navbar from '../components/layout/Navbar';
-// import FavoriteRepos from '../components/profile/FavoriteRepos';
+import FavoriteRepos from '../components/profile/FavoriteRepos';
 
 const ProfilePage: FC = () => {
   const { user } = useAuth();
@@ -34,7 +34,7 @@ const ProfilePage: FC = () => {
             Favorite Repositories
           </Typography>
           <Divider sx={{ mb: 2 }} />
-          {/* <FavoriteRepos /> */}
+          <FavoriteRepos />
         </Box>
       </Container>
     </Box>
