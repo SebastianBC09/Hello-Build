@@ -1,39 +1,27 @@
+import { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useCallback } from 'react';
+
+import { useStore } from '../../store/useStore';
 
 export const useAuth = () => {
-  const {
-    isAuthenticated,
-    isLoading,
-    user,
-    loginWithRedirect,
-    logout,
-    getAccessTokenSilently
-  } = useAuth0();
+  const { getAccessTokenSilently, user, isAuthenticated, logout } = useAuth0();
+  const setToken = useStore((state) => state.setToken);
+  const clearAuth = useStore((state) => state.clearAuth);
 
-  const login = useCallback(() => {
-    loginWithRedirect();
-  }, [loginWithRedirect]);
-
-  const handleLogout = useCallback(() => {
-    logout({ logoutParams: { returnTo: window.location.origin } });
-  }, [logout]);
-
-  const getToken = useCallback(async () => {
-    try {
-      return await getAccessTokenSilently();
-    } catch (error) {
-      console.error('Error getting token:', error);
-      return null;
+  useEffect(() => {
+    if (isAuthenticated) {
+      getAccessTokenSilently().then(setToken);
     }
-  }, [getAccessTokenSilently]);
+  }, [isAuthenticated, getAccessTokenSilently, setToken]);
+
+  const handleLogout = () => {
+    clearAuth();
+    logout();
+  };
 
   return {
-    isAuthenticated,
-    isLoading,
     user,
-    login,
-    logout: handleLogout,
-    getToken
+    isAuthenticated,
+    logout: handleLogout
   };
 };

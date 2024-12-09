@@ -22,7 +22,7 @@ const Auth0ProviderWithHistory:FC<Auth0ProviderWithHistory> = ({children}) => {
       authorizationParams={{
         redirect_uri: import.meta.env.VITE_AUTH0_CALLBACK_URL,
         audience: audience,
-        scope: "read:current_user update:current_user_metadata"
+        scope: "openid profile email read:user read:repo offline_access"
       }}
       onRedirectCallback={onRedirectCallback}
       cacheLocation="localstorage"
