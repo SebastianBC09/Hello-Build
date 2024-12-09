@@ -5,20 +5,26 @@ import LockOpenTwoToneIcon from '@mui/icons-material/LockOpenTwoTone';
 import { Star } from '@mui/icons-material';
 import FavoriteButton from './FavoriteButton';
 import { useFavorites } from '../../hooks/useFavorites';
-
 interface RepoCard {
   id: number;
   name: string;
   description: string | null;
-  language: {
+  url: string;
+  isPrivate: boolean;
+  stargazerCount: number;
+  updatedAt: string;
+  primaryLanguage: {
     name: string;
     color: string;
   } | null;
-  url: string;
-  stargazerCount: number;
-  isPrivate: boolean;
 }
-const RepoCard: FC<RepoCard> = ({ id, name, description, language, url, stargazerCount, isPrivate }) => {
+const RepoCard: FC<RepoCard> = ({id,
+  name,
+  description,
+  primaryLanguage,
+  url,
+  stargazerCount,
+  isPrivate  }) => {
   const { favorites, addFavorite, removeFavorite } = useFavorites();
   const isFavorite = favorites.some(repo => repo.id === id);
 
@@ -26,31 +32,26 @@ const RepoCard: FC<RepoCard> = ({ id, name, description, language, url, stargaze
     if (isFavorite) {
       removeFavorite(id.toString());
     } else {
-      addFavorite({ id, name, description, language, url, stargazerCount, isPrivate });
+      addFavorite({
+        id,
+        name,
+        description,
+        primaryLanguage,
+        url,
+        stargazerCount,
+        isPrivate,
+        updatedAt: new Date().toISOString()
+      });
     }
   };
 
 
-  return (
-    <Card
-      elevation={2}
-      sx={{
-        minWidth: 275,
-        transition: 'transform 0.2s',
-        '&:hover': {
-          transform: 'translateY(-2px)'
-        }
-      }}
-    >
+return (
+    <Card elevation={2} sx={{ minWidth: 275 }}>
       <CardContent>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
           <Box>
-            <Link
-              href={url}
-              target="_blank"
-              underline="hover"
-              sx={{ color: 'primary.main' }}
-            >
+            <Link href={url} target="_blank" underline="hover" sx={{ color: 'primary.main' }}>
               <Typography variant="h6">{name}</Typography>
             </Link>
             {description && (
@@ -66,12 +67,12 @@ const RepoCard: FC<RepoCard> = ({ id, name, description, language, url, stargaze
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 2 }}>
-          {language && (
+          {primaryLanguage && (  // Changed from language
             <Chip
               size="small"
-              label={language.name}
+              label={primaryLanguage.name}
               sx={{
-                backgroundColor: language.color,
+                backgroundColor: primaryLanguage.color,
                 color: '#fff',
                 '& .MuiChip-label': { fontWeight: 500 }
               }}
