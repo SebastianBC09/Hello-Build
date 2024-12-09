@@ -2,13 +2,14 @@ export interface Repository {
   id: number;
   name: string;
   description: string | null;
-  language: {
+  url: string;
+  isPrivate: boolean;
+  stargazerCount: number;
+  updatedAt: string;
+  primaryLanguage: {
     name: string;
     color: string;
   } | null;
-  url: string;
-  stargazerCount: number;
-  isPrivate: boolean;
 }
 
 export interface RepositoryResponse {
