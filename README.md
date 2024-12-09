@@ -125,5 +125,8 @@ Endpoints used:
 - `/api/github/repositories/search`
 - `/api/favorites`
 
-## License
-This project is licensed under the MIT License.
+## 👨‍💻 Author
+Sébastien Ballen Castaneda
+
+## 📜 License
+MIT License - see LICENSE file for details
