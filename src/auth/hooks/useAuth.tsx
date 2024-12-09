@@ -20,7 +20,6 @@ export const useAuth = () => {
       try {
         if (isAuthenticated) {
           const token = await getAccessTokenSilently();
-          console.log('Token obtained successfully'); // Debug log
           setToken(token);
         }
       } catch (error) {

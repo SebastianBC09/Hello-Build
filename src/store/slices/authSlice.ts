@@ -12,7 +12,6 @@ export const createAuthSlice: StateCreator<AuthSlice> = (set) => ({
   token: null,
   setToken: (token) => {
     set({ token, isAuthenticated: true });
-    // Optional: Store token in localStorage as backup
     localStorage.setItem('auth_token', token);
   },
   clearAuth: () => {
