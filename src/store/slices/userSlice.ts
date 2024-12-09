@@ -1,9 +1,13 @@
 import { StateCreator } from 'zustand';
-import { AuthUser } from '../../auth/types/auth.types';
-
+interface User {
+  sub: string;
+  email?: string;
+  name?: string;
+  picture?: string;
+}
 export interface UserSlice {
-  user: AuthUser | null;
-  setUser: (user: AuthUser | null) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
 }
 
 export const createUserSlice: StateCreator<UserSlice> = (set) => ({

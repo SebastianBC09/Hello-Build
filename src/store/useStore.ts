@@ -1,10 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { AuthSlice, createAuthSlice } from './slices/AuthSlice';
+import { AuthSlice, createAuthSlice } from './slices/authSlice';
 import { UserSlice, createUserSlice } from './slices/userSlice';
 import { FavoritesSlice, createFavoritesSlice } from './slices/favoritesSlice';
 import { SearchSlice, createSearchSlice } from './slices/searchSlice';
-
 
 type StoreState = UserSlice & FavoritesSlice & SearchSlice & AuthSlice;
 
@@ -21,7 +20,7 @@ export const useStore = create<StoreState>()(
       partialize: (state) => ({
         isAuthenticated: state.isAuthenticated,
         user: state.user,
-        tokens: state.tokens
+        token: state.token
       })
     }
   )
